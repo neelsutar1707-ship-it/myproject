@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Rohu! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ffeef8 0%, #e8f4fd 50%, #fff9e6 100%);
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .handwritten {
+            font-family: 'Kalam', cursive;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: #8b5fbf;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #d63384;
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: #6c757d;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .letter-text {
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            color: #495057;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid #ffc1e3;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.4);
+        }
+
+        .photo-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #ffeef8, #e8f4fd);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px dashed #ff6b9d;
+            color: #8b5fbf;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Style for actual photos when you add them - optimized for portrait photos */
+        .photo-img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid #ff6b9d;
+        }
+
+        .photo-caption {
+            font-size: 1.5rem;
+            color: #d63384;
+            margin-top: 1.5rem;
+            font-weight: 500;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ff6b9d;
+            color: #ff6b9d;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #ff6b9d;
+            color: white;
+        }
+
+        /* Floating animations */
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .balloon {
+            font-size: 3rem;
+            animation-duration: 4s;
+        }
+
+        .sparkle {
+            font-size: 2rem;
+            animation-duration: 5s;
+        }
+
+        .confetti {
+            font-size: 1.5rem;
+            animation-duration: 3s;
+        }
+
+        /* Instructions box */
+        .instructions {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #ff6b9d;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .instructions h3 {
+            color: #d63384;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .instructions code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #e83e8c;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .page {
+                padding: 15px;
+            }
+            
+            .letter-text {
+                padding: 1.5rem;
+            }
+            
+            .navigation {
+                bottom: 20px;
+                flex-wrap: wrap;
+                max-width: 90%;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+
+            .instructions {
+                margin: 10px;
+                padding: 15px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Page counter */
+        .page-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: #8b5fbf;
+            font-weight: 500;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Counter -->
+    <div class="page-counter">
+        <span id="currentPage">1</span> / <span id="totalPages">17</span>
+    </div>
+
+    <!-- Page 1: Opening -->
+    <div class="page active" id="page1">
+        <div class="container">
+            <h1 class="handwritten">🎉 Happy Birthday, Rohu! 🎂✨</h1>
+            <p class="subtitle">Since 2017, even across the distance, you've been one of the most special people in my life. Today is all about celebrating *you*.</p>
+            <button class="btn" onclick="nextPage()">Begin Your Surprise →</button>
+        </div>
+        
+        <!-- Floating decorations -->
+        <div class="floating-element balloon" style="top: 10%; left: 10%;">🎈</div>
+        <div class="floating-element sparkle" style="top: 20%; right: 15%;">✨</div>
+        <div class="floating-element confetti" style="top: 60%; left: 5%;">🎊</div>
+        <div class="floating-element balloon" style="top: 70%; right: 10%;">🎈</div>
+        <div class="floating-element sparkle" style="top: 15%; left: 60%;">⭐</div>
+        <div class="floating-element confetti" style="top: 80%; right: 20%;">🎉</div>
+    </div>
+
+    <!-- Page 2: Celebration -->
+    <div class="page" id="page2">
+        <div class="container">
+            <h2 class="handwritten">Let's Celebrate YOU 🌸</h2>
+            <div class="letter-text">
+                Birthdays come once a year, but people like you are rare to find in a lifetime. Even though our bond has been built online — through countless chats, calls, and laughter — it has always felt real and close. Today is about honoring the amazing person you are, and the joy you bring to everyone around you.
+            </div>
+        </div>
+        
+        <div class="floating-element sparkle" style="top: 15%; left: 20%;">🌟</div>
+        <div class="floating-element balloon" style="top: 25%; right: 25%;">🎈</div>
+        <div class="floating-element confetti" style="top: 70%; left: 15%;">🌸</div>
+        <div class="floating-element sparkle" style="top: 60%; right: 15%;">✨</div>
+    </div>
+
+    <!-- Page 3: Letter -->
+    <div class="page" id="page3">
+        <div class="container">
+            <h2 class="handwritten">Dear Rohu,</h2>
+            <div class="letter-text">
+                Seven years ago, in 2017, our paths crossed in the digital world, and little did I know that this online connection would become one of the most meaningful friendships of my life. 
+                <br><br>
+                Distance has never been a barrier for us. Through screens and messages, calls and laughter, we've built something beautiful and genuine. You've been there through my ups and downs, sharing in my joys and offering comfort during tough times.
+                <br><br>
+                Your positivity, your kindness, and your incredible spirit have touched my life in ways you might not even realize. Even though we've never met in person, you feel like family to me.
+                <br><br>
+                On this special day, I wish you all the happiness, success, and joy that life has to offer. May this new year of your life be filled with beautiful moments, exciting adventures, and dreams coming true.
+                <br><br>
+                Here's to many more years of friendship, laughter, and celebrating life together!
+                <br><br>
+                With all my love and warmest wishes,<br>
+                Your Friend 💖
+            </div>
+        </div>
+        
+        <div class="floating-element sparkle" style="top: 10%; left: 10%;">🌺</div>
+        <div class="floating-element confetti" style="top: 20%; right: 10%;">💐</div>
+        <div class="floating-element sparkle" style="top: 80%; left: 20%;">🌸</div>
+        <div class="floating-element balloon" style="top: 75%; right: 25%;">💕</div>
+    </div>
+
+
+
+    <!-- Memory Pages 4-16 (Photos 1-13) -->
+    <div class="page" id="page4">
+        <div class="container">
+            <h2 class="handwritten">Your Beautiful Memories 📸</h2>
+            <div class="photo-container">
+                <img src="Images\1 (2).jpeg" alt="Rohu's photo 1" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 1 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🌟 "Your brightest smile"</div>
+            </div>
+        </div>
+        <div class="floating-element sparkle" style="top: 15%; left: 15%;">✨</div>
+        <div class="floating-element confetti" style="top: 70%; right: 20%;">🌟</div>
+    </div>
+
+    <div class="page" id="page5">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (3).jpeg" alt="Rohu's photo 2" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 2 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🌸 "Pure positivity"</div>
+            </div>
+        </div>
+        <div class="floating-element sparkle" style="top: 20%; left: 10%;">🌸</div>
+        <div class="floating-element balloon" style="top: 60%; right: 15%;">💖</div>
+    </div>
+
+    <div class="page" id="page6">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (4).jpeg" alt="Rohu's photo 3" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 3 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🎉 "Confidence in every look"</div>
+            </div>
+        </div>
+        <div class="floating-element confetti" style="top: 25%; right: 20%;">🎉</div>
+        <div class="floating-element sparkle" style="top: 75%; left: 25%;">⭐</div>
+    </div>
+
+    <div class="page" id="page7">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (5).jpeg" alt="Rohu's photo 4" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 4 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">💐 "The happiest version of you"</div>
+            </div>
+        </div>
+        <div class="floating-element balloon" style="top: 15%; left: 20%;">💐</div>
+        <div class="floating-element sparkle" style="top: 80%; right: 10%;">✨</div>
+    </div>
+
+    <div class="page" id="page8">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (6).jpeg" alt="Rohu's photo 5" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 5 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">💖 "My personal favorite"</div>
+            </div>
+        </div>
+        <div class="floating-element confetti" style="top: 30%; left: 15%;">💖</div>
+        <div class="floating-element sparkle" style="top: 65%; right: 25%;">🌟</div>
+    </div>
+
+    <div class="page" id="page9">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (7).jpeg" alt="Rohu's photo 6" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 6 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">✨ "Shining always"</div>
+            </div>
+        </div>
+        <div class="floating-element sparkle" style="top: 10%; right: 15%;">✨</div>
+        <div class="floating-element balloon" style="top: 70%; left: 10%;">🎈</div>
+    </div>
+
+    <div class="page" id="page10">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (8).jpeg" alt="Rohu's photo 7" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 7 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🌈 "The cheerful vibe you carry"</div>
+            </div>
+        </div>
+        <div class="floating-element confetti" style="top: 20%; left: 25%;">🌈</div>
+        <div class="floating-element sparkle" style="top: 75%; right: 20%;">🌟</div>
+    </div>
+
+    <div class="page" id="page11">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (9).jpeg" alt="Rohu's photo 8" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 8 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🌺 "A glow that inspires"</div>
+            </div>
+        </div>
+        <div class="floating-element balloon" style="top: 25%; right: 10%;">🌺</div>
+        <div class="floating-element sparkle" style="top: 60%; left: 20%;">✨</div>
+    </div>
+
+    <div class="page" id="page12">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (10).jpeg" alt="Rohu's photo 9" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 9 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🌟 "Elegance in simplicity"</div>
+            </div>
+        </div>
+        <div class="floating-element sparkle" style="top: 15%; left: 10%;">🌟</div>
+        <div class="floating-element confetti" style="top: 80%; right: 15%;">💫</div>
+    </div>
+
+    <div class="page" id="page13">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (11).jpeg" alt="Rohu's photo 10" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 10 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🎀 "The photo that speaks a thousand words"</div>
+            </div>
+        </div>
+        <div class="floating-element balloon" style="top: 30%; left: 15%;">🎀</div>
+        <div class="floating-element sparkle" style="top: 70%; right: 25%;">✨</div>
+    </div>
+
+    <div class="page" id="page14">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (12).jpeg" alt="Rohu's photo 11" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 11 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🌸 "Joy captured in a frame"</div>
+            </div>
+        </div>
+        <div class="floating-element confetti" style="top: 20%; right: 20%;">🌸</div>
+        <div class="floating-element sparkle" style="top: 65%; left: 15%;">🌟</div>
+    </div>
+
+    <div class="page" id="page15">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (13).jpeg" alt="Rohu's photo 12" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 12 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">💕 "A moment frozen beautifully"</div>
+            </div>
+        </div>
+        <div class="floating-element balloon" style="top: 10%; right: 10%;">💕</div>
+        <div class="floating-element sparkle" style="top: 75%; left: 25%;">✨</div>
+    </div>
+
+    <div class="page" id="page16">
+        <div class="container">
+            <div class="photo-container">
+                <img src="Images\1 (1).jpeg" alt="Rohu's photo 13" class="photo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    📷 Photo 13 of Rohu<br>
+                    <small>Photo not found</small>
+                </div>
+                <div class="photo-caption">🎂 "The perfect picture for your special day"</div>
+            </div>
+        </div>
+        <div class="floating-element confetti" style="top: 25%; left: 20%;">🎂</div>
+        <div class="floating-element sparkle" style="top: 60%; right: 15%;">🎉</div>
+    </div>
+
+    <!-- Page 17: Closing -->
+    <div class="page" id="page17">
+        <div class="container">
+            <h1 class="handwritten">Wishing You the Happiest Birthday, Rohu! 🎂💐</h1>
+            <div class="letter-text">
+                From 2017 till today, our online friendship has been one of the most special chapters of my life. Even without meeting in person, you've made me realize how distance doesn't matter when the bond is true. Here's to more laughter, more calls, more chats, and many more birthdays to celebrate together. May this year be your brightest yet.
+                <br><br>
+                With love & best wishes,<br>
+                💖 Your Friend
+            </div>
+            <button class="btn" onclick="showMessage()">🎁 Made with Love for You</button>
+        </div>
+        
+        <!-- Grand finale decorations -->
+        <div class="floating-element balloon" style="top: 5%; left: 5%;">🎈</div>
+        <div class="floating-element sparkle" style="top: 10%; right: 10%;">✨</div>
+        <div class="floating-element confetti" style="top: 15%; left: 50%;">🎊</div>
+        <div class="floating-element balloon" style="top: 60%; left: 10%;">🎈</div>
+        <div class="floating-element sparkle" style="top: 70%; right: 5%;">⭐</div>
+        <div class="floating-element confetti" style="top: 80%; right: 30%;">🎉</div>
+        <div class="floating-element sparkle" style="top: 25%; left: 80%;">✨</div>
+        <div class="floating-element balloon" style="top: 85%; left: 70%;">🎈</div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" onclick="prevPage()">← Previous</button>
+        <button class="nav-btn active" onclick="goToPage(1)">1</button>
+        <button class="nav-btn" onclick="nextPage()">Next →</button>
+    </div>
+
+    <script>
+        let currentPageNum = 1;
+        const totalPages = 17;
+        
+        document.getElementById('totalPages').textContent = totalPages;
+
+        function showPage(pageNum) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show current page
+            document.getElementById(`page${pageNum}`).classList.add('active');
+            
+            // Update counter
+            document.getElementById('currentPage').textContent = pageNum;
+            currentPageNum = pageNum;
+            
+            // Update navigation buttons
+            updateNavigation();
+        }
+
+        function nextPage() {
+            if (currentPageNum < totalPages) {
+                showPage(currentPageNum + 1);
+            }
+        }
+
+        function prevPage() {
+            if (currentPageNum > 1) {
+                showPage(currentPageNum - 1);
+            }
+        }
+
+        function goToPage(pageNum) {
+            showPage(pageNum);
+        }
+
+        function updateNavigation() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Update page number button if it exists
+            const pageBtn = document.querySelector(`.nav-btn[onclick="goToPage(${currentPageNum})"]`);
+            if (pageBtn) {
+                pageBtn.classList.add('active');
+            }
+        }
+
+        function showMessage() {
+            alert('🎉 This website was created with so much love and care for you, Rohu! Happy Birthday! 🎂✨');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextPage();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevPage();
+            }
+        });
+
+        // Initialize
+        showPage(1);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9754856854502961',t:'MTc1NjIyMzgwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
